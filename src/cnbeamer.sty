@@ -1,0 +1,62 @@
+\usepackage{xcolor}
+\usepackage{ctex}
+\usepackage{caption}
+\usepackage{subfigure}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage[
+    backend=biber,
+    style=authoryear,
+    sorting = nty,
+    hyperref=true,
+    doi=false
+]{biblatex}
+
+\setbeamerfont{footnote}{size=\tiny}
+
+% \usetheme{Dove}
+\usecolortheme{Dove}
+\usefonttheme{professionalfonts}
+\setsansfont[BoldFont=Times New Roman Bold, ItalicFont=Times New Roman Italic]{Arial}
+\setCJKmainfont{KaiTi}[BoldFont=SimHei, ItalicFont=KaiTi]
+\setCJKsansfont{KaiTi}[BoldFont=SimHei, ItalicFont=KaiTi]
+
+\setbeamertemplate{caption}[numbered]
+\setlength\bibitemsep{1.25\itemsep}
+
+\setbeamertemplate{section in toc}[circle]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+\setbeamertemplate{itemize item}[ball]
+\setbeamertemplate{theorems}[ams style]
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{0.5em} }{\enditemize}
+
+\newtheoremstyle{spacing}
+{\topsep}{\topsep}%   Space above nad below
+{}%                   Body font
+{}%                   Indent amount (empty = no indent, \parindent =
+% para indent)
+{\bfseries}%          Thm head font
+{.}%                  Punctuation after thm head
+{1em}%                Space after thm head: \newline = linebreak
+{}%                   Thm head spec (can be left empty, meaning `normal')
+
+% Create different theorem environments and setup \autoref for them
+% \label{X:label_name} should match \Xautorefname
+\theoremstyle{spacing}
+
+\newtheorem{assumption}{Assumption}
+\newcommand{\assumptionautorefname}{Assumption}
+
+
+
+

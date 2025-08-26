@@ -1,0 +1,48 @@
+
+\documentclass[12pt]{article}
+\usepackage{./src/paper}
+\addbibresource{./src/ref.bib}
+\title{DID读书笔记}
+\author{蒋金骋 \and 蒲泽荣 \and 王成成}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Intro}
+
+This is a reading note for \textit{Difference-in-difference: a
+practitioner's guide} \parencite{Baker.etal2025}. First, let's list DID design from simple
+to difficult:
+\begin{itemize}
+  \item basic \( 2 \times 2 \) DID design (with covariates)
+  \item many time periods, with different treat times, treatment
+    turned on and off
+  \item multiple or continuous treatments
+\end{itemize}
+
+接下来，我们尝试思考一些问题：
+\begin{enumerate}
+  \item properties of RA, IPW and DR estimators (unbiasedness, consistency)
+  \item inference, how to compute standard errors and do asymptotic inference for the estimators
+  \item problems of using event-study regression coefficients to check PT
+  \item how to check PT under staggered DID with covariates
+  \item problems with TWFE incorporated with covariates
+  \item multiple/continuous/turned-on-and-off treatments
+  \item DID with IV\@?
+\end{enumerate}
+
+最后，尝试写一个假设/定理
+\begin{assumption}[No anticipation, NA]
+  For all treated units $i$ and pre-treat periods $t=0$, there is
+  $$
+  Y_{i,t}(1) = Y_{i,t}(0)
+  $$
+\end{assumption}
+
+\appendix
+
+\printbibliography[title={References}]
+
+\end{document}
