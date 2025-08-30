@@ -1,0 +1,50 @@
+% !TeX root = ../didNotes.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% this note contain things about parallel trends
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[../didNotes.tex]{subfiles}
+\begin{document}
+
+\section{About parallel trends}
+
+\subsection{Parallel trends versus independence}
+
+\begin{quote}
+  Parallel trends makes DiD distinct from causal designs that are based on statistical independence between treatment
+  and potential outcomes. In designs like randomized trials or instrumental
+  variables, the conditions—mean equalities across groups, for instance—that identify counterfactuals
+  are often a statistical consequence of the randomness induced externally (Heckman, 2000).
+  In contrast, parallel trends is just a restriction on untreated potential outcome trends. It does
+  not necessarily come from exogenous variation “outside the model.” In fact, because treatment
+  adoption is often chosen by economic actors or policymakers “inside the model,” parallel trends
+  need not hold. For this reason, DiD analyses (correctly) devote significant attention to evaluating
+  parallel trends.
+\end{quote}
+
+This paragraph says that, in DID designs we don't need an assumption as strong as statistical independence, which
+may not hold in observational studies. Instead, we just require the two groups have the same untreated potential
+outcome trends \textit{on average}. Let us clarify the relationship between independence (hereafter i.d.) and
+parallel trends (hereafter PT).
+
+$\text{i.d.} \implies \text{PT}$, because i.d.
+means $\mathbb{E}[Y_{i,0}(0) \mid D_{i}=0] = \mathbb{E}[Y_{i,0}(0) \mid D_{i}=1]$
+and $\mathbb{E}[Y_{i,1}(0) \mid D_{i}=0] = \mathbb{E}[Y_{i,1}(0) \mid D_{i}=1]$, which directly implies PT.
+
+$\text{PT} \notimplies \text{i.d.}$, because parallel trends could hold even with $D$ correlated with levels of
+$Y_{i,t}(0)$ (so long as that correlation is \textit{time-invariant} and cancels when differencing). Thus PT
+is weaker than full mean-independence -- and it is of a different logical kind 
+(a structural restriction on outcome dynamics).
+
+%% TODO
+%% show the claim above use a model
+
+$$
+Y_{i,t}(0) = \alpha_{i} + \eta_{t} + D_{i} \gamma + u_{i,t}
+$$
+where $D_{i} gamma$ can be absorbed by the fixed effect.
+
+%% TODO read Ghanem et al. (2025) and write something about DID and selection mechanism
+
+
+\end{document}

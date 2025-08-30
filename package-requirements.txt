@@ -22,3 +22,4 @@ tabularx
 biblatex
 enumitem
 latexmk
+subfiles
