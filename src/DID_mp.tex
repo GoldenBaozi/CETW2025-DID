@@ -1,0 +1,133 @@
+%% Notes for CETW 2025
+%% DID with multiple periods
+
+\documentclass[../didNotes.tex]{subfiles}
+
+\begin{document}
+
+\section{多期DID}
+
+这部分笔记讨论多个时期情况下DID方法的识别、估计与推断。首先，我们考虑只有一个处理时点的情况，也就是所谓的简单事件研究法，
+此时的DID设计中，ATT的识别无非是两期DID简单扩展到多个时期，这部分重点讨论的内容是如何理解平行趋势假设并对这一假设进行敏感性分析；
+其次，我们考虑纳入协变量，这部分无非是两期DID纳入协变量的简单扩展。
+
+然后，我们考虑多个处理发生在不同时点的情形（但是每个个体最多受到一次处理），也就是所谓的交错DID，这部分的关键在于，如何基于不同假设选择合适的控制组，
+从而识别每个``处理--时点''所对应的ATT，并将其加总得到聚合的单一/截面/动态序列处理效应；接着，我们讨论交错DID设计下TWFE估计方法的问题；最后，
+我们在交错DID情形下纳入协变量，这部分无非是多期DID纳入协变量的简单拓展。
+
+\subsection{简单事件研究法}
+
+假设有时期 $1,2, \ldots ,T$，唯一的处理发生在 $t=g$ 时期，个体的接受处理标志为 $D_{i} \in \{ g,\infty \}$，个体的潜在结果是
+$$
+Y_{i,t} = \mathbb{1} (D_{i}=g) Y_{i,t}(g) + \mathbb{1} (D_{i}=\infty)Y_{i,t}(\infty)
+$$
+这里我们用 $\infty$ 表示个体从未接受处理。``事件研究法''这个词的含义是，估计处理在发生后的每一期对于受到处理的个体的因果效应，这一因果效应
+是相对于某个基期而言的（一般选择处理发生前一期为基期）也就是说，对于 $t: g \le t \le T$，我们希望来计算如下的每一期的平均处理效应所构成的序列：
+$$
+\text{ATT}(t) \coloneqq \mathbb{E}_{\omega}[Y_{i,t}(g) - Y_{i,t}(\infty) \mid D_{i}=g]
+$$
+从而我们有 $T-g+1$ 个未知参数需要做识别、估计和推断。
+
+首先来考虑识别和估计问题，与两期DID一样，我们使用平行趋势假设（PT）来进行识别，但由于有多个参数需要识别，就需要多个平行趋势假设，如下
+\begin{assumption}[PT-ES]\label{thm:pt-es}
+  潜在结果 $Y_{i,g-1}(\infty)$ 到 $Y_{i,t}(\infty)$ 在处理组和控制组里的变化趋势对于 $t:g\le t\le T$ 在平均意义上是一样的，也就
+  $$
+  \mathbb{E}_{\omega}[Y_{i,t}(\infty) -Y_{i,g-1}(\infty) \mid D_i=g] =
+  \mathbb{E}_{\omega}[Y_{i,t}(\infty) - Y_{i,g-1}(\infty) \mid D_i=\infty], \; \forall g \le t \le T
+  $$
+\end{assumption}
+\autoref{thm:pt-es} 允许我们来识别整个平均处理效应序列，如果该假设只对于某些期 $t$ 成立，那么我们可以识别出这些期的平均处理效应，也就是
+\begin{align*}
+  \text{ATT}(t) &= \mathbb{E}_{\omega}[Y_{i,t}(g)-Y_{i,g-1}(\infty) \mid D_{i}=g] -
+  \mathbb{E}_{\omega}[Y_{i,t}(\infty)-Y_{i,g-1}(\infty) \mid D_{i}=\infty] \\
+  &= \mathbb{E}_{\omega}[Y_{i,t}-Y_{i,g-1} \mid D_{i}=g] -
+  \mathbb{E}_{\omega}[Y_{i,t}-Y_{i,g-1} \mid D_{i}=\infty]
+\end{align*}
+从而这一识别所对应的估计量可以很容易地写出来
+$$
+\widehat{\text{ATT}}(t) = (\bar{Y}_{\omega, D=g, t}-\bar{Y}_{\omega, D=g, g-1}) -
+(\bar{Y}_{\omega, D=\infty, t}-\bar{Y}_{\omega, D=\infty, g-1})
+$$
+也就是用样本加权平均值代替条件期望。在估计出动态平均处理效应序列后，可以对时间序列取平均，得到一个对时间而言``平均''的平均处理效应
+$$
+\widehat{\text{ATT}} \equiv \frac{1}{T-g+1} \sum_{t=g}^{T} \widehat{\text{ATT}}(t)
+$$
+从而一目了然地看出处理的平均效果。
+
+其次，我们来做推断。文献中建议的方法是将上述估计结果写成等价的TWFE形式
+$$
+Y_{i,t} = \alpha_i + \eta_t + \sum_{k=1}^{g-2} \beta_k \left[ \mathbf{1}(G_i=g)
+\mathbf{1}(t=k) \right] +
+\sum_{s=g}^{T} \beta_s  \left[ \mathbf{1}(G_i=g) \mathbf{1}(t=s) \right] + \epsilon_{i,t}
+$$
+可以简单地证明，$\beta_{k}=\tau_{k},\beta_{s}=\text{ATT}_s$。因此，可以利用我们所熟悉的线性回归的大样本性质来构建渐进统计量，对平均
+处理效应进行假设检验。基于bootstrap的检验方法可以用\texttt{csdid}软件包实现。%% TODO 写证明过程，以及静态TWFE-DID估计量的含义
+
+接下来，我们来更加仔细地审视对于DID识别至关重要的平行趋势假设。目前的实证文章中，通常会通过对处理发生前趋势差异做假设检验，来``检验''平行趋势假设。
+事前趋势差异 $\tau_{-k}$ 定义为
+\begin{align*}
+  \tau_{-k} &\coloneqq \mathbb{E}[Y_{i,t=g-1-k}(\infty)-Y_{i,t=g-1}(\infty) \mid D_i = g] -
+  \mathbb{E}[Y_{i,t=g-1-k}(\infty)-Y_{i,t=g-1}(\infty) \mid D_i = \infty] \\
+  &= \mathbb{E}[Y_{i,t=g-1-k}-Y_{i,t=g-1} \mid D_i = g] -
+  \mathbb{E}[Y_{i,t=g-1-k}-Y_{i,t=g-1} \mid D_i = \infty], 0 < k < g-1
+\end{align*}
+其含义是处理发生前的第 $k$ 期的结果变量到 $g-1$ 期在处理组和控制组里的平均变化趋势之差，若为0，则说明 $k \to g-1$ 期两组的趋势无差异，若
+全部为0，则说明处理发生前，处理组和控制组的结果变量的平均演化过程。因此，对其做假设检验，若无法拒绝每一期的事前趋势差异为0的原假设，则认为
+平行趋势假设成立？
+
+上述陈述是有争议的。这一检验最大的问题是：平行趋势是对观测不到的潜在因果的演化趋势做出的假设，因此本身是不可检验的。上述检验只能为平行趋势假设的
+成立与否提供一些信息，但是，最近的文献指出，由于多重假设检验、检验效力和处理的选择机制等问题，这一检验所包含的信息会含有噪声，妨碍我们对于结果的理解。
+处于稳健性的考量，文献也建议实证研究者在汇报结果时，对可能违反PT的情况做一些敏感性分析，增加结果的可信度。
+
+\textbf{争议一，处理的选择机制导致事前检验失效}。\textcite{ghanem2025} 研究了这一问题。这里我们仅仅讨论原文中涉及的一种情况（处理选择机制），
+也就是个体会根据当期实现的未观测冲击来决定是否接受处理（所谓的不完美前瞻，imperfect foresight），而不关心未来的不确定性冲击。
+为了进行一些理论分析，文章假设了处理的选择机制 $D_{i}$ 为不可观测随机变量的函数
+$$
+D_{i} = g(\alpha_{i},\epsilon_{i 1}, \epsilon_{i 2}, \nu_{i}, \eta_{i 1}, \eta_{i 2})
+$$
+其中，$\alpha, \epsilon$ 可以理解为固定效应和随机扰动项，他们也决定了潜在结果
+$$
+Y_{i t}(0) = \xi_{t}(\alpha_{i}, \epsilon_{i t})
+$$
+而 $\nu,\eta$ 是一组额外的未观测随机变量。这些变量的实现值分别用 $a,e,v,t$ 来表示。不完美前瞻的处理选择机制指的是如下函数类
+$$
+\mathcal{G}_{\text{if}} \coloneqq \{ g: \exists g', g(\alpha_{i},\epsilon_{i 1}, \epsilon_{i 2}, \nu_{i}, \eta_{i 1}, \eta_{i 2}) = g'(\alpha_{i},\epsilon_{i 1}, \nu_{i}, \eta_{i 1}) \}
+$$
+当上述选择机制存在时，平行趋势假设满足需要一些额外条件。\textcite{ghanem2025} 所展示的一个必要条件是：
+$$
+\text{PT} \implies \mathbb{E}[Y_{i 2}(0)-\mathbb{E}[Y_{i 2}(0)] \mid \alpha_{i},\epsilon_{i 1}] = Y_{i 1}(0)-\mathbb{E}[Y_{i 1}(0)] \; \textit{a.s.}
+$$
+如果把 $Y_{i t}(0) - \mathbb{E}[Y_{i t}(0)]$ 看作一个关于 $t$ 的随机过程，那么这个随机过程具有鞅性质：下一期的期望等于当期的实现值。
+
+可以进一步将上述条件写成
+$$
+Y_{i 2}(0) - Y_{i 1}(0) = \mathbb{E}[Y_{i 2}(0) - Y_{i 1}(0)] + \zeta_{i t}, \; \mathbb{E}[\zeta_{i t} \mid \alpha_{i},\epsilon_{i t}]=0
+$$
+That is, Proposition 3.2 allows the each individual's untreated potential outcomes to vary over time beyond
+deterministic mean shifts but requires the stochastic component of the change over time, $\zeta_{i 2}$,
+to be mean-independent of the pre-treatment unobservables $(\alpha_{1},\epsilon_{i 1})$
+
+进一步，可以证明存在上述选择机制时（以及线性放松的鞅条件下），用平行趋势假设识别出来的ATT会具有误差
+\begin{align*}
+  \Delta_{\text{post}} &= \Delta_{\text{post}}^{\text{sel}} + \Delta_{\text{post}}^{\text{mtg}} \\
+  &= \mathbb{E}[\zeta_{i 2} \mid D_{i}=1] - \mathbb{E}[\zeta_{i 2} \mid D_{i}=0] \\
+  &+ (\rho_{2}-1) \left(\mathbb{E}[Y_{i 1} \mid D_{i}=1] - \mathbb{E}[Y_{i 1} \mid D_{i}=0]\right)
+\end{align*}
+其中，$\rho_{2}$ 满足 $\mathbb{E}[\dot{Y}_{i 2}(0) \mid \alpha_{i}, \epsilon_{i 1}]=\rho_{2} \dot{Y}_{i 1}$.
+可以看到，误差分为两部分，第一部分是两组之间第二期随机冲击项的均值之差，若处理与第二期的随机冲击的实现值相关，那么第一部分将不为0；第二部分
+是鞅条件偏离程度 $\rho_{2}-1$ 和两组结果之间的事前差异，如果鞅条件偏离程度越远，那么即使我们检验出一个很小的事前差异，
+也会给DID的识别带来很大的偏差。
+
+另一种典型处理选择机制是基于固定效应的选择，考虑结果模型 $Y_{i t}(0) = \theta_{i} \gamma_{t}$ 
+与处理选择模型 $D_{i} = \theta_{i}$，其中，$\gamma_{t}$ 是随着时间增长的趋势项，$\theta_{i} \in \{ 0,1 \}$ 是某种固定效应。
+此种情况下，平行趋势将无法满足，因为
+$$
+\mathbb{E}[Y_{i 2}(0) - Y_{i 1}(0) \mid D_{i}=1] - \mathbb{E}[Y_{i 2}(0) - Y_{i 1}(0) \mid D_{i}=0] = \gamma_{2} - \gamma_{1}
+$$
+将这一两期模型推广到多期，显然存在处理后平行趋势不满足的问题，在这种情况下，事前趋势检验能否将这一问题检验出来呢？更正式地提出这个问题：
+给定一个存在趋势偏离的结果模型，如果事后趋势偏离足够大以至于使得平均处理效应不显著，其事前趋势是否能够被传统的检验方法检验出来？
+我们在下面的第二个争议部分进行讨论。
+
+
+
+\end{document}
