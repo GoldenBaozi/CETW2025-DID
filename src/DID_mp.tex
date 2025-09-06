@@ -38,9 +38,9 @@ $$
 \end{assumption}
 \autoref{thm:pt-es} 允许我们来识别整个平均处理效应序列，如果该假设只对于某些期 $t$ 成立，那么我们可以识别出这些期的平均处理效应，也就是
 \begin{align*}
-  \text{ATT}(t) &= \mathbb{E}_{\omega}[Y_{i,t}(g)-Y_{i,g-1}(\infty) \mid D_{i}=g] -
-  \mathbb{E}_{\omega}[Y_{i,t}(\infty)-Y_{i,g-1}(\infty) \mid D_{i}=\infty] \\
-  &= \mathbb{E}_{\omega}[Y_{i,t}-Y_{i,g-1} \mid D_{i}=g] -
+  \text{ATT}(t) & = \mathbb{E}_{\omega}[Y_{i,t}(g)-Y_{i,g-1}(\infty) \mid D_{i}=g] -
+  \mathbb{E}_{\omega}[Y_{i,t}(\infty)-Y_{i,g-1}(\infty) \mid D_{i}=\infty]           \\
+  & = \mathbb{E}_{\omega}[Y_{i,t}-Y_{i,g-1} \mid D_{i}=g] -
   \mathbb{E}_{\omega}[Y_{i,t}-Y_{i,g-1} \mid D_{i}=\infty]
 \end{align*}
 从而这一识别所对应的估计量可以很容易地写出来
@@ -68,9 +68,9 @@ $$
 接下来，我们来更加仔细地审视对于DID识别至关重要的平行趋势假设。目前的实证文章中，通常会通过对处理发生前趋势差异做假设检验，来``检验''平行趋势假设。
 事前趋势差异 $\tau_{-k}$ 定义为
 \begin{align*}
-  \tau_{-k} &\coloneqq \mathbb{E}[Y_{i,t=g-1-k}(\infty)-Y_{i,t=g-1}(\infty) \mid D_i = g] -
-  \mathbb{E}[Y_{i,t=g-1-k}(\infty)-Y_{i,t=g-1}(\infty) \mid D_i = \infty] \\
-  &= \mathbb{E}[Y_{i,t=g-1-k}-Y_{i,t=g-1} \mid D_i = g] -
+  \tau_{-k} & \coloneqq \mathbb{E}[Y_{i,t=g-1-k}(\infty)-Y_{i,t=g-1}(\infty) \mid D_i = g] -
+  \mathbb{E}[Y_{i,t=g-1-k}(\infty)-Y_{i,t=g-1}(\infty) \mid D_i = \infty]                    \\
+  & = \mathbb{E}[Y_{i,t=g-1-k}-Y_{i,t=g-1} \mid D_i = g] -
   \mathbb{E}[Y_{i,t=g-1-k}-Y_{i,t=g-1} \mid D_i = \infty], 0 < k < g-1
 \end{align*}
 其含义是处理发生前的第 $k$ 期的结果变量到 $g-1$ 期在处理组和控制组里的平均变化趋势之差，若为0，则说明 $k \to g-1$ 期两组的趋势无差异，若
@@ -102,21 +102,21 @@ $$
 1}(0)-\mathbb{E}[Y_{i 1}(0)] \; \textit{a.s.}
 $$
 如果把 $Y_{i t}(0) - \mathbb{E}[Y_{i t}(0)]$ 看作一个关于 $t$ 的随机过程，那么这个随机过程具有鞅性质：下一期的期望等于当期的实现值。
-
 可以进一步将上述条件写成
 $$
 Y_{i 2}(0) - Y_{i 1}(0) = \mathbb{E}[Y_{i 2}(0) - Y_{i 1}(0)] + \zeta_{i t}, \; \mathbb{E}[\zeta_{i t} \mid
 \alpha_{i},\epsilon_{i t}]=0
 $$
-That is, Proposition 3.2 allows the each individual's untreated potential outcomes to vary over time beyond
-deterministic mean shifts but requires the stochastic component of the change over time, $\zeta_{i 2}$,
-to be mean-independent of the pre-treatment unobservables $(\alpha_{1},\epsilon_{i 1})$
+也就是说，该条件允许每个个体在未接受处理时的潜在结果随时间变化，不仅限于确定性的均值变动，
+但要求其随时间变化的随机成分 $\zeta_{i 2}$ 在均值意义下独立于处理前的不可观测因素 $(\alpha_{1},\epsilon_{i 1})$。这是PT假设满足的
+一个必要条件。
 
 进一步，可以证明存在上述选择机制时（以及线性放松的鞅条件下），用平行趋势假设识别出来的ATT会具有误差
 \begin{align*}
-  \Delta_{\text{post}} &= \Delta_{\text{post}}^{\text{sel}} + \Delta_{\text{post}}^{\text{mtg}} \\
-  &= \mathbb{E}[\zeta_{i 2} \mid D_{i}=1] - \mathbb{E}[\zeta_{i 2} \mid D_{i}=0] \\
-  &+ (\rho_{2}-1) \left(\mathbb{E}[Y_{i 1} \mid D_{i}=1] - \mathbb{E}[Y_{i 1} \mid D_{i}=0]\right)
+  \Delta_{\text{post}} & = \Delta_{\text{post}}^{\text{sel}} + \Delta_{\text{post}}^{\text{mtg}}
+  \\
+  & = \mathbb{E}[\zeta_{i 2} \mid D_{i}=1] - \mathbb{E}[\zeta_{i 2} \mid D_{i}=0]                   \\
+  & + (\rho_{2}-1) \left(\mathbb{E}[Y_{i 1} \mid D_{i}=1] - \mathbb{E}[Y_{i 1} \mid D_{i}=0]\right)
 \end{align*}
 其中，$\rho_{2}$ 满足 $\mathbb{E}[\dot{Y}_{i 2}(0) \mid \alpha_{i}, \epsilon_{i 1}]=\rho_{2} \dot{Y}_{i 1}$.
 可以看到，误差分为两部分，第一部分是两组之间第二期随机冲击项的均值之差，若处理与第二期的随机冲击的实现值相关，那么第一部分将不为0；第二部分
@@ -163,9 +163,9 @@ $\Pr(\hat{\beta}_{\text{pre}} \notin B_{\text{NIS}} \mid \delta_{\text{post}} \n
 也就是说，使得事前趋势检验的效力（power）为0.8（在这个DGP中，检验出事前趋势等价于检验出事后趋势）。
 在这一事前检验的设定下，我们来看事后参数估计的偏差以及检验的显著性水平（size），暂且考虑``条件于通过事前检验''的版本
 \begin{align*}
-  \text{bias} &\equiv \mathbb{E}[l' \hat{\beta}_{\text{post}} - l' \tau_{\text{post}} \mid
-  \hat{\beta}_{\text{pre}} \in B_{\text{NIS}}] \\
-  \text{size} &\equiv \mathbb{E}[l' \tau_{\text{post}} \notin \text{CI}_{\tau} \mid \hat{\beta}_{\text{pre}}
+  \text{bias} & \equiv \mathbb{E}[l' \hat{\beta}_{\text{post}} - l' \tau_{\text{post}} \mid
+  \hat{\beta}_{\text{pre}} \in B_{\text{NIS}}]                                                                \\
+  \text{size} & \equiv \mathbb{E}[l' \tau_{\text{post}} \notin \text{CI}_{\tau} \mid \hat{\beta}_{\text{pre}}
   \in B_{\text{NIS}}]
 \end{align*}
 其中，bias指的是事前趋势检验通过时，DID估计量的偏差；size指的是事前趋势检验通过时，即使真实的处理效应为0，仍然认为处理效应不为0的概率
@@ -194,8 +194,8 @@ $\Pr(\hat{\beta}_{\text{pre}} \notin B_{\text{NIS}} \mid \delta_{\text{post}} \n
   \item 小样本下存在多重假设检验问题
 \end{itemize}
 
-由于这些问题的存在，\textcite{rambachan2023} 提出了一种对PT可能的违反做敏感性分析的方法，以及相应的软件包 \texttt{HonestDID}。
-这个方法采用了先验假设+部分识别技术，就是在看存在特定的PT违反时，事后估计系数和显著性会怎么变化，同时报告这一结果。当然，由于没有什么理论来支撑，
+由于这些问题的存在，\textcite{rambachan2023} 提出了一种对PT可能的违反做敏感性分析的方法，以及相应的软件包~\texttt{HonestDID}。
+这个方法采用了先验假设+部分识别，其目的是研究存在特定的PT违反时，事后估计系数和显著性会怎么变化，同时报告这一结果。当然，由于没有什么理论来支撑，
 我们不知道给什么样的假设是合适的，所以这一方法并没有完全解决平行趋势检验的问题。
 
 \textcite{rambachan2023} 的主要想法是，将PT假设放松到``PT被违反，但是违反程度在一定范围内''，也就是将趋势偏离 $\delta$ 限制在某个集合
@@ -209,7 +209,9 @@ $$
 \max_{s<0} \left\vert \delta_{s+1}-\delta_{s} \right\vert  \}
 $$
 在这个约束中，事后趋势偏离不会超过事前趋势偏离最大值的 $M$ 倍。\textcite{rambachan2023} 的理论贡献是推导了在类似平行趋势被
-有限度地违反地情况下，如何构造置信区间并进行推断，他们用这一方法对文献进行了敏感性分析，如 \autoref{pic:PT_sensitivity} 所示
+有限度地违反地情况下，如何构造置信区间并进行推断，他们用这一方法对文献进行了敏感性分析，如 \autoref{pic:PT_sensitivity} 所示。在左边这张图里，
+当 $M=2$ 时，处理效应的估计值变得不在显著了。问题在于，我们不知道 $M=2$ 是不是一个有意义的benchmark，不知道是太大还是太小，缺乏一个比较的框架。
+
 \begin{figure}[htbp]
   \begin{center}
     \includegraphics[width=0.85\textwidth]{./assets/PT_sensitivity.png}
@@ -217,18 +219,32 @@ $$
   \caption{对Benzarti and Carloni (2019) 的敏感性分析}
   \label{pic:PT_sensitivity}
 \end{figure}
-可以看到，问题在于我们不知道什么样的 $M$ 的选取是有意义的，缺乏一个比较的框架。
 
 \subsection{加入协变量}
 
-在简单事件研究法中加入协变量，无非是吧两期情况下的条件PT假设扩展到多期（相对于基期），然后根据多期相对于基期构造多个RA、IPW和DR估计量，然后计算
+在简单事件研究法中加入协变量，无非是把两期情况下的条件PT假设扩展到多期（相对于基期），然后根据多期相对于基期构造多个RA、IPW和DR估计量，然后计算
 方差，进行推断。这里的问题是，不能用TWFE做估计和推断了，因为TWFE对于CATT的加总使用的权重是不清楚的。这部分相对于两期DID而言没有任何新内容，
-因此简单略过。除了一点，在带有协变量的情况下，如何检查平行趋势呢？
+因此简单略过，只展示一下DR估计量的表示方法
+$$
+\text{ATT}_{\text{dr}}(t) = \mathbb{E} \left[ \left( w_{\omega,D=1}(D_{i})-w_{\omega,D=0}(D_{i},X_{i})
+\right) \left( Y_{i,t}-Y_{i,t=g-1} - \mathbb{E}_{\omega}[Y_{i,t}-Y_{i,t=g-1} \mid X_{i},D_{i}=0] \right) \right]
+$$
+其中，$\mathbb{E}_{\omega}[Y_{i,t}-Y_{i,t=g-1} \mid X_{i},D_{i}=0]$ 需要用结果回归模型去估计，
+\begin{align*}
+  w_{\omega,D=1}(D) &= \frac{\omega D}{\mathbb{E}[\omega D]} \\
+  w_{\omega ,D=0}(X,D) &=
+  \frac{\omega (1-D) p_{\omega}(X)}{1-p_{\omega}(X)} \Big/ \mathbb{E} \left[\frac{\omega
+  (1-D) p_{\omega}(X)}{1-p_{\omega}(X)}  \right]
+\end{align*}
+分别是处理组和对照组的逆概率加权权重，其中 $p_{\omega}(X_i) = \mathbb{E}[D_i=1 \mid X_i]$ 需要用倾向得分模型去估计。
+
+只有一点不明确，\textcolor{red}{在带有协变量的情况下，如何检查平行趋势呢?}暂时没有找到这方面的文献，原文里面也没有说。
 
 %% TODO inference and PT with covariates
 
 \subsection{交错DID}
 
+交错处理指的是不同个体在不同时间受到处理，形成不同的处理``队列''（cohort）。
 我们需要进一步修改潜在因果框架的形式以适应交错处理的情况。直觉上，``交错处理''实际上就是许多不同的\( 2 \times 2 \) 处理-对照比较。
 假设每个个体最多只会接受一次处理，且处理不会被取消。我们用处理开始的日期来索引潜在结果，记为 \( g: Y_{i,t}(g) \)；对于永不接受处理的个体，
 我们用 \( Y_{i,t}=Y_{i,t}(\infty) \) 来表示。因此，潜在结果可以表示为
@@ -239,7 +255,7 @@ $$
 且处理分别发生在第二期和第三期，那么数据结构为
 \begin{align*}
   Y_{1,1}(\infty),Y_{1,2}(\infty),Y_{1,3}(\infty),Y_{1,4}(\infty) \\
-  Y_{2,1}(2), Y_{2,2}(2), Y_{2,3}(2), Y_{2,4}(2) \\
+  Y_{2,1}(2), Y_{2,2}(2), Y_{2,3}(2), Y_{2,4}(2)                  \\
   Y_{3,1}(3), Y_{3,2}(3), Y_{3,3}(3), Y_{3,4}(3)
 \end{align*}
 
@@ -297,8 +313,8 @@ $$
 .\]
 由此可以识别。结合前面的例子，这个估计量可以构造为
 \begin{align*}
-  \widehat{\text{ATT}}(2,2)&=[Y_{2,2}-Y_{2,1}] - [Y_{1,2}-Y_{1,1}] \\
-  \widehat{\text{ATT}}(3,3)&=[Y_{3,3}-Y_{3,1}] - [Y_{1,3}-Y_{1,1}]
+  \widehat{\text{ATT}}(2,2) & =[Y_{2,2}-Y_{2,1}] - [Y_{1,2}-Y_{1,1}] \\
+  \widehat{\text{ATT}}(3,3) & =[Y_{3,3}-Y_{3,1}] - [Y_{1,3}-Y_{1,1}]
   .
 \end{align*}
 等等。采用NEV假设时，也可以使用如下fully saturated回归来估计ATT，估计结果与手动计算的DID估计量是一样的
@@ -314,20 +330,26 @@ $$
 .\]
 结合前面的例子，该估计量可以构造为
 \begin{align*}
-  \widehat{\text{ATT}}(2,2) &= [Y_{2,2}-Y_{2,1}] - \frac{1}{2} [Y_{1,2}-Y_{1,1} +
-  Y_{3,2}-Y_{3,1}] \\
-  .
+  \widehat{\text{ATT}}(2,2) & = [Y_{2,2}-Y_{2,1}] - \frac{1}{2} [Y_{1,2}-Y_{1,1} +
+  Y_{3,2}-Y_{3,1}].
 \end{align*}
 其他情况与NEV估计量相同。
 
 基于 \autoref{thm:pt-all} 的估计量暂时略去。交错情况下的估计方法与简单事件研究法完全一致，只不过需要明确对哪一个队列和时间点去估计，
-以及明确使用谁作为控制组。因此估计的具体表达式也略去了，只是用上面的例子来说明。
-估计的具体表达式和推断方法（计算标准误）可以参考 \textcite{callaway2021}。
+以及明确使用谁作为控制组，然后根据识别式用样本均值代替总体期望算子即可。因此估计的具体表达式也略去了，只是用上面的例子来说明。
+估计的具体表达式和推断方法可以参考 \textcite{callaway2021}。
 
-%% TODO try to add the PT-ALL case, focus on Wooldridge's papers
+简单总结一下，面对三类识别假设，我们该选哪一种？
+\begin{enumerate}
+  \item 在ALL假设下（\autoref{thm:pt-all}），因为使用了更多的数据，可以得到更加精确的估计量；但是这一假设本身比较严格，如果某些队列-时间下PT不满足，那么估计量是有偏的
+  \item 在NEV假设下（\autoref{thm:pt-nev}），只将从未接受处理的个体作为对照组，这一做法简单直观，也避免了``forbidden
+    comparisons''的麻烦，估计量可以直接用一个回归得到；但如果这些个体是由于某些特质而选择没有接受处理，那么PT可能会不满足，而且有的时候这部分个体可能比较少，会使得估计效率降低
+  \item NYT假设（\autoref{thm:pt-not-yet}）是一个中庸之选，相比于ALL假设要求更放松，相比于NEV假设可以使用更多信息，但是无法通过回归直接估计，需要采用``前向工程''方法进行估计和推断
+\end{enumerate}
 
-\textbf{将group-time ATT进行加总}。在识别并估计出group-time ATT后，我们发现这些结果太多了，希望得到一些加总的结果，来系统地描述这个处理
-所产生的总体情况或者平均影响。直觉上，有三种加总方式：一是对所有时间和组进行加总，代表处理发生后的整体影响；
+\textbf{将group-time ATT进行加总}。在识别并估计出group-time ATT后，我们可以用他们做一些异质性、处理效应分布的描述。
+但是有时候也希望得到一些加总的结果，来系统地描述处理所产生的总体情况或者平均影响。
+直觉上，有三种加总方式：一是对所有时间和组进行加总，代表处理发生后的整体影响；
 二是在某个时间截面上对所有组的情况进行加总，得到处理发生特定时间后，对所有组的平均影响；
 三是对某个组的处理效应时间序列进行加总，得到该处理对于某个组（相对于其对照组而言）的平均影响。我把三类加总方式列在下面：
 \begin{itemize}
@@ -345,27 +367,101 @@ $$
 
 \subsection{TWFE的问题}
 
-许多情形下，使用TWFE来估计DID设计所对应的ATT不是一个好的选择。下面，我们来对这个问题进行分类讨论
+许多情形下，使用TWFE来估计DID设计所对应的ATT不是一个好的选择。\autoref{tab:TWFE} 展示了最近文献中对不同DID设置下TWFE适用性的讨论
 
 \begin{table}[ht]
   \caption{TWFE可用性比较}\label{tab:TWFE}
   \centering
-  \begin{adjustbox}{width = \textwidth, center}
-    \begin{tabular}{@{} l*{3}{c} @{}}
-      \toprule
-      DID设计    & 简单回归       & 灵活回归   & 文献    \\
-      \hline
-      两期    & $\checkmark$     & --   & --  \\
-      两期带协变量    & $\times$     & --  & \textcite{SantAnna.Zhao2020}   \\
-      多期    & $\checkmark$ (minus pre-effect)     & $\checkmark$ & --    \\
-      多期带协变量    & $\times$     & $\times$  & \textcite{callaway2021}   \\
-      交错-NEV    & $\times$   & $\checkmark$ (IW) & \textcite{sun2021}    \\
-      交错-NYT    & $\times$    & $\checkmark$ (IW, last-treated) & \textcite{sun2021}    \\
-      交错-ALL    & $\times$    & $\checkmark$ (ETWFE) & \textcite{wooldridge2021}   \\
-      交错带协变量    & $\times$    & $\times$ & \textcite{callaway2021} \\
-      \bottomrule
-    \end{tabular}
-  \end{adjustbox}
+  \begin{tabularx}{\linewidth}{@{} p{3.2cm} *{2}{C} L p{3.2cm} @{}}
+    \toprule
+    DID设计 & 简单回归 & 灵活回归 & 文献 \\
+    \midrule
+    两期 & $\checkmark$ & -- & -- \\
+    两期带协变量 & $\times$ & -- & \textcite{caetano2024} \\
+    多期 & $\checkmark$ (minus pre-effect) & $\checkmark$ & -- \\
+    多期带协变量 & $\times$ & $\times$ & \textcite{callaway2021} \\
+    交错-NEV & $\times$ & $\checkmark$ (IW) & \textcite{sun2021} \\
+    交错-NYT & $\times$ & $\times$ & -- \\
+    交错-ALL & $\times$ & $\checkmark$ (ETWFE) & \textcite{wooldridge2021} \\
+    交错带协变量 & $\times$ & $\times$ & \textcite{callaway2021} \\
+    \bottomrule
+  \end{tabularx}
 \end{table}
+其中，简单回归和灵活回归指的分别是以下两种设定，其中 $D_{i,t}^{l} \coloneqq \mathbb{1}(t-G_{i}=l)$
+\begin{align*}
+  Y_{i,t} &= \alpha_{i} + \eta_{t} + \beta^{\text{twfe}} D_{i,t} + \epsilon_{i,t} \\
+  Y_{i,t} &= \alpha_{i} + \eta_{t} + \sum_{l = -K}^{-2} \beta_{l} D_{i,t}^{l} + \sum_{l=0}^{T} \beta_{l}
+  D_{i,t}^{l} + \epsilon_{i,t}
+\end{align*}
+
+\textbf{任何带有协变量的情形}。这一问题在前面的部分已经说明。一旦带有协变量，TWFE形式下的系数估计将会是所有的CATT以非凸权重进行加总，其因果含义
+不清晰。因此，文献中建议使用``前向工程方法''，也就是首先使用RA、IPW或者DR方法估计出CATT，再进行加总得到ATT。
+
+\textbf{简单事件研究情形}。这一问题在前面的部分已经说明。在简单事件研究情形下，采用灵活回归可以正确识别并估计 $\text{ATT}(t)$，而采用
+简单回归，得到的是所有 $\text{ATT}(t)$ 的均值减去事前``效应''的均值，因此需要做调整。
+
+\textbf{交错情形}。在交错情形下，采用简单回归得到的估计量 $\hat{\beta}^{\text{twfe}}$ 是有问题的，
+简单回归的设定本质上也是不同队列的处理组和其控制组做差得到的ATT的加权平均，然而其中隐含了一些
+``forbidden comparisons''，也就是包含了``将已经受到处理的队列作为控制组''的比较。回忆一下，在我们的``前向工程''交错DID估计量中，只有把
+从未接受处理的个体和还没有接受处理的个体作为控制组，而不会把已经接受处理的个体作为控制组。这一行为的问题在于，它会给某些队列--时期的ATT赋予
+负的权重。考虑一个3期3队列的设定，这三个队列分别在第一期、第二期和第无穷期接受处理。此时，可以把简单回归的第二期数据减掉第一期数据，得到
+$$
+\Delta Y_{i,2} = \Delta \eta_{2} + \beta^{\text{twfe}} \Delta D_{i,2} + \Delta \epsilon_{i,2}
+$$
+对于第一期和无穷期接受处理的组而言，$\Delta D_{i,2}=0$，对于第二期接受处理的组而言，$\Delta D_{i,t}=1$，因此上式是一个二值回归，得到的
+估计值就是difference-in-mean，从而有
+\begin{align*}
+  \beta^{\text{twfe}} &= \mathbb{E}[\Delta Y_{i,2} \mid \Delta D_{i,2}=1] - \mathbb{E}[\Delta Y_{i,2} \mid
+  \Delta D_{i,2}=0] \\
+  &= \left(\mathbb{E}[\Delta Y_{i,2} \mid G_{i}=2] - \mathbb{E}[\Delta Y_{i,2} \mid G_{i}=\infty]\right)(1-w_{1}) +
+  \left(\mathbb{E}[\Delta Y_{i,2} \mid G_{i}=2] - \mathbb{E}[\Delta Y_{i,2} \mid G_{i}=1]\right)w_{1} \\
+  &= \cdots \\
+  &= \text{ATT}(2,2)(1-w_{1}) + \left( \text{ATT}(2,2)-[\text{ATT}(1,2)-\text{ATT}(1,1)] \right) w_{1} \\
+  &= \text{ATT}(2,2)+w_{1} \text{ATT}(1,1) - w_{1} \text{ATT}(1,2)
+\end{align*}
+其中 $w_{1}$ 大致是第一期接受处理的队列的样本数占比（不严谨）。结果上来看，$\beta^{\text{twfe}}$ 包含了
+在时期二将第二组和第一组（已经接受处理）进行比较，从而导致最后的结果出现了带有负权重的 $\text{ATT}(g,t)$ 加总，这甚至可能导致TWFE估计结果
+和实际的加总结果 $\text{ATT}_{\text{avg}}$ 符号相反！在交错情形下，\textcite{sun2021} 证明了，即使是采用灵活回归，每一个 $\beta_{l}$
+所对应的estimand依然存在上述问题，因此，灵活回归也不可用。
+
+那么，在交错情形下，我们完全无法使用TWFE这一类的回归估计量来估计ATT吗？也不全然，文献中对TWFE进行了一系列拓展，使得其能够适应交错情形，
+在一定的PT假设下，能够估计出和``前向工程''一样的ATT。比如说，\textcite{sun2021} 所提出的interaction--weighted估计量
+$$
+Y_{i,t} = \alpha_{i} + \eta_{t} + \sum_{g \neq \infty} \sum_{e \neq -1} \beta_{g,e}^{\text{IW}} \mathbb{1} (G_{i}=g)
+\mathbb{1}(G_{i}+e=t) + \epsilon_{i,t}
+$$
+可以在NEV假设下一致地估计出各个 $\text{ATT}(g,t)$，再进行加总；而 \textcite{wooldridge2021} 所提出的ETWFE估计量
+$$
+Y_{i,t} = \alpha_{i} + \eta_{t} + \sum_{g \neq \infty} \sum_{s = g}^{T} \beta_{g,t}^{\text{E}} \mathbb{1} (G_{i}=g)
+\mathbb{1}(s=t) + \epsilon_{i,t}
+$$
+可以在ALL假设下一致地估计出各个 $\text{ATT}(g,t)$，再进行加总。
+
+%% TODO understand IW and ETWFE estimator
+
+\section{总结与实操指南}
+
+总结一下，这篇综述建议实证研究者在使用DID进行研究时，应当按照以下步骤进行：
+\begin{enumerate}
+  \item 根据数据结构与处理类型确定待估参数（比如说，明确要估计的是 $\text{ATT(g,t)}$）
+  \item 明确识别假设（哪些组之间存在PT）
+  \item 选择合适估计方法进行估计（一般而言，就是用IPW或者DR），对异质性（队列，时间）的估计结果进行分析，加总得到整体的估计结果
+  \item 讨论不确定性的来源，进行推断（design, sampling or model based）
+  \item 对PT做敏感性分析
+\end{enumerate}
+文章的正文部分有许多内容没有讨论，而放在附录中：
+\begin{itemize}
+  \item 处理的``开关''
+  \item 连续或多值处理变量
+  \item 三重差分
+  \item 处理效应的分布或分位数，而非平均处理效应
+  \item 重复截面与非平衡面板
+\end{itemize}
+整篇文章没有涉及以下主题
+\begin{itemize}
+  \item fuzzy DID和工具变量DID
+  \item 非线性DID
+  \item 多个处理情形，等等
+\end{itemize}
 
 \end{document}

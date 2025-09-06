@@ -1,34 +1,18 @@
 version: "0.2"
-language: "en,en-us"
-# dictionaries:
-#   - project-specific-terms
-
-# dictionaryDefinitions:
-#   - name: project-specific-terms
-#     path: ./project-specific-terms.txt
-#     addWords: true
-
+language: en,en-us
 words:
-  - covariates
+  - counterfactual
+  - counterfactuals
   - covariate
+  - covariates
+  - estimand
+  - Heckman
+  - IPW
   - Jiang
   - Jincheng
   - TWFE
-  - IPW
-  - Heckman
-  - counterfactual
-  - counterfactuals
-
-
 ignoreWords:
   - tempVar
-
 ignorePaths:
-  - "temp/**"
-  - "out/**"
-
-# files:
-#   - "**/*.js"
-#   - "**/*.ts"
-#   - "**/*.md"
-#   - "!src/legacy/**" # Exclude files in src/legacy
+  - temp/**
+  - out/**

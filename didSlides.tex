@@ -6,11 +6,12 @@
   % aspectratio=169
 ]{beamer}
 \usepackage{cnbeamer}
+\usepackage{subfiles}
 \addbibresource{ref.bib}
 
 \title{DID论文汇报}
 \date{\today}
-\author{蒋金骋 \and 蒲泽荣 \and 王成成}
+\author{蒲泽荣 \and 蒋金骋 \and 王成成}
 
 \begin{document}
 
@@ -33,7 +34,8 @@
   这是一篇介绍DID的文章 \parencite{Baker.etal2025}
 
   \begin{assumption}[Parallel Trends, PT]
-    The (weighted) \textit{average change of outcome} is the same between treated and control units if no treat happens, i.e.
+    The (weighted) \textit{average change of outcome} is the same between treated and control units if no
+    treat happens, i.e.
     \begin{align*}
       \mathbb{E}[Y_{i,t=1}(0) \mid D_i=1] - \mathbb{E}[Y_{i,t=0}(0) \mid D_i=1] = \\
       \mathbb{E}[Y_{i,t=1}(0) \mid D_i=0] - \mathbb{E}[Y_{i,t=0}(0) \mid D_i=0]
@@ -42,14 +44,7 @@
 
 \end{frame}
 
-\section{多期DID与事件研究法}
-
-\begin{frame}
-  \frametitle{多期DID}
-
-  TBD
-
-\end{frame}
+\subfile{./src/DID_mp_bm.tex}
 
 \section{更多内容}
 
@@ -63,6 +58,7 @@
 \appendix
 
 \begin{frame}[allowframebreaks]
+  \frametitle{References}
   \printbibliography
 \end{frame}
 

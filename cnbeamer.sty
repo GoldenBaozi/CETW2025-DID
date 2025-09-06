@@ -3,19 +3,21 @@
 \usepackage{caption}
 \usepackage{subfigure}
 \usepackage{fontspec}
+\usepackage{mathtools}
 \usepackage{unicode-math}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amssymb}
+\usepackage{amsmath, amsthm}
+% \usepackage{amsthm}
+% \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{array,booktabs,tabularx}
 \usepackage{float}
 \usepackage{xcolor}
 \usepackage[
-    backend=biber,
-    style=authoryear,
-    sorting = nty,
-    hyperref=true,
-    doi=false
+  backend=biber,
+  style=authoryear,
+  sorting = nty,
+  hyperref=true,
+  doi=false
 ]{biblatex}
 
 \setbeamerfont{footnote}{size=\tiny}
@@ -23,7 +25,7 @@
 % \usetheme{Dove}
 \usecolortheme{Dove}
 \usefonttheme{professionalfonts}
-\setsansfont[BoldFont=Times New Roman Bold, ItalicFont=Times New Roman Italic]{Arial}
+\setsansfont[ItalicFont=Times New Roman Italic]{Source Sans Pro}
 \setCJKmainfont{KaiTi}[BoldFont=SimHei, ItalicFont=KaiTi]
 \setCJKsansfont{KaiTi}[BoldFont=SimHei, ItalicFont=KaiTi]
 
@@ -38,6 +40,22 @@
 
 \setbeamertemplate{footline}[frame number]
 \setbeamertemplate{navigation symbols}{}
+
+\AtBeginSection[]{
+  \begin{frame}
+    \frametitle{目录}
+    \tableofcontents[currentsection, hideothersubsections]
+  \end{frame}
+}
+
+% Add frame before each subsection
+\AtBeginSubsection[]{
+  \begin{frame}
+    \frametitle{目录}
+    \tableofcontents[currentsection, currentsubsection]
+  \end{frame}
+}
+
 \newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{0.5em} }{\enditemize}
 
 \newtheoremstyle{spacing}
@@ -57,6 +75,6 @@
 \newtheorem{assumption}{Assumption}
 \newcommand{\assumptionautorefname}{Assumption}
 
-
-
-
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
